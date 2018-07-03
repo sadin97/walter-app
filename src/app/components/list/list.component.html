@@ -1,0 +1,125 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <button type="button" name="button" class="btn btn-primary btn-sm" (click)="page = 'list';"><i class="fas fa-th-list"></i> Lista radnika</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" name="button" class="btn btn-primary btn-sm" style="margin-left: 10px;" (click)="page = 'daily';"><i class="fas fa-clipboard-list"></i> Daily scrum</button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="maincontent"
+  *ngIf="page == 'list'">
+  <div class="input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Pretraga <i class="fas fa-search"></i></span>
+    </div>
+    <input type="text" [(ngModel)]='searchText' class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+  </div>
+
+  <button type="button" class="btn btn-secondary btn-sm" (click)="AddWorker();"
+      style="
+      float: right;
+      top: 10px;
+      position: absolute;
+      right: 50px;">
+    <i class="fas fa-plus"></i> Dodaj
+  </button>
+
+  <div class="container"
+      *ngFor="let worker of workers | search:['name', searchText]; let i = index;">
+        <ul class="list-group">
+          <li class="list-group-item">
+
+            <div class="workertab"
+              *ngIf="this.worker.editing == false">
+                {{worker.name}}
+                <div class="buttons">
+                  <button type="button" name="button" (click)="this.worker.editing = true; str = this.worker.name; ResetOthers(i);" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Izmijeni</button>
+                  <button type="button" name="button" (click)="RemoveWorker(i, this.worker.name);" class="btn btn-danger btn-sm" style="margin-left: 10px;"><i class="fas fa-trash-alt"></i> Obriši</button>
+                </div>
+            </div>
+            <div class="workertab"
+              *ngIf="this.worker.editing == true">
+              <input id="str" [(ngModel)]="str" type="text" ng-model="inputText" >
+                <div class="buttons">
+                  <button type="button" name="button" (click)="SaveWorker(this.worker.id, i);" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Snimi</button>
+                  <button type="button" name="button" (click)="this.worker.editing = false;" class="btn btn-secondary btn-sm" style="margin-left: 10px;"><i class="fas fa-undo"></i> Odbaci</button>
+                </div>
+            </div>
+          </li>
+        </ul>
+  </div>
+
+  <div class="infoHired">
+    Ukupno zaposlenih: {{maxWorkers}}.
+  </div>
+</div>
+
+
+<div class="maincontent"
+  *ngIf = "page == 'daily'">
+  <div class="input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Pretraga <i class="fas fa-search"></i></span>
+    </div>
+    <input type="text" [(ngModel)]='searchText' class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+  </div>
+
+  <button type="button" class="btn btn-secondary btn-sm" (click)="adding = true;"
+      style="
+      float: right;
+      top: 10px;
+      position: absolute;
+      right: 50px;">
+    <i class="fas fa-plus"></i> Dodaj
+  </button>
+
+  <div class="addingDaily"
+    *ngIf="adding == true">
+    <form (ngSubmit)="onSubmit()" #dailyForm="ngForm">
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Odaberi radnika:</label>
+        <select class="form-control" id="exampleFormControlSelect1"
+          required
+          [(ngModel)]="model.name" name="name">
+          <option
+            *ngFor="let worker of workers; let i = index;">{{worker.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Vrijeme dolaska:</label>
+        <input type="email" class="form-control" id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Unesite vrijeme dolaska"
+            required
+            [(ngModel)]="model.time" name="time">
+        <small id="emailHelp" class="form-text text-muted">U prazno polje unesite vrijeme dolaska u obliku: H:MM, npr. 9:15 za 9 sati i 15 minuta.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Završi upis</button>
+    </form>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Ime uposlenika</th>
+        <th scope="col">Vrijeme dolaska</th>
+        <th scope="col">Stigao na vrijeme</th>
+      </tr>
+    </thead>
+    <tbody
+      *ngFor="let scrum of dailyscrum | search:['name', searchText]; let i = index;">
+      <tr>
+        <th scope="row">opcije</th>
+        <td>{{scrum.name}}</td>
+        <td>{{scrum.time}}</td>
+        <td>{{scrum.onTime}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
