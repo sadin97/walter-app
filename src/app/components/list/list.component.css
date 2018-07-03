@@ -5,6 +5,7 @@
   background-color: #efefef;
   margin-top: 20px;
   position: relative;
+  border-radius: 5px;
 }
 
 .input-group.input-group-sm.mb-3{
@@ -32,4 +33,10 @@
 .infoHired {
   margin-top: 10px;
   font-size: 13px;
+}
+
+i.fas.fa-save:hover, i.fas.fa-undo:hover, i.fas.fa-user-edit:hover, i.fas.fa-user-times:hover, i.fas.fa-user-edit:hover {
+  color: #555;
+  transition: 0.2s;
+  cursor: pointer;
 }
