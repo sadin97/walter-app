@@ -33,22 +33,17 @@ export class ListComponent implements OnInit {
 
 
   dailyscrum = [
-    {name: "Sadin", time: "6:00", onTime: "Da", editing: false}
+    { name: "Sadin", time: "6:00", onTime: "Da", editing: false }
   ]
 
   str: string;
   SaveWorker(id, i): void {
-    //console.log(this.str);
-    //console.log(i);
-
     this.workers[i].name = this.str;
     this.workers[i].editing = false;
-
   }
 
   RemoveWorker(i, name) {
     this.workers.splice(i, 1);
-    //console.log(i, name);
     this.maxWorkers -= 1;
   }
 
@@ -60,21 +55,14 @@ export class ListComponent implements OnInit {
       editing: false
     }
     this.workers.push(worker);
-    console.log(this.workers);
   }
 
   ResetOthers(val) {
     for(var i=0; i < this.maxWorkers; i++) {
       if(i != val) {
-        //console.log("ova nije: " + i);
         this.workers[i].editing = false;
-        //console.log(this.workers[i].editing);
       }
     }
-  }
-
-  AddDailyScrum() {
-
   }
 
   submitted = false;
@@ -83,15 +71,13 @@ export class ListComponent implements OnInit {
     let uslov_h = false;
     let uslov_m = false;
 
-    let prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
+    const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
 
     let input = this.model.time;
     let fields = input.split(':');
 
     let hours = fields[0];
     let minutes = fields[1];
-
-    //console.log("Dosao na posao u " + h + " sati i " + m + " minuta.");
 
     let h = Number(hours);
     let m = Number(minutes);
@@ -102,13 +88,11 @@ export class ListComponent implements OnInit {
     else
       this.model.onTime = "Da";
 
-    if(h >= 0 && h < 24) {
-      // Ovo su pravilno uneseni sati.
+    if(h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
       uslov_h = true;
     }
 
-    if(m >= 0 && m < 60) {
-      // Ovo su pravilno unesene minute.
+    if(m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
       uslov_m = true;
     }
 
@@ -118,22 +102,13 @@ export class ListComponent implements OnInit {
       this.submitted = true;
       this.dailyscrum.push(object);
       this.rowNumber += 1;
-      /*console.log("Ovo je object: ");
-      console.log(object);
-      console.log("Ovo je JSON.stringify(this.model): ");
-      console.log(JSON.stringify(this.model));
-      console.log("Ovo je dailyscrum: ");
-      console.log(this.dailyscrum);*/
       this.addedFail = false;
       this.addedSuccess = true;
-
     }
     else {
       this.addedSuccess = false;
       this.addedFail = true;
-      //alert("Unesite vrijeme u formatu: H:MM.\nNpr. 9:15 za 9 sati i 15 minuta.");
     }
-
   }
 
   timeToEdit: string;
@@ -142,15 +117,13 @@ export class ListComponent implements OnInit {
     let uslov_h = false;
     let uslov_m = false;
 
-    let prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
+    const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
 
     let input = this.timeToEdit;
     let fields = input.split(':');
 
     let hours = fields[0];
     let minutes = fields[1];
-
-    //console.log("Dosao na posao u " + h + " sati i " + m + " minuta.");
 
     let h = Number(hours);
     let m = Number(minutes);
@@ -161,13 +134,12 @@ export class ListComponent implements OnInit {
     else
       this.dailyscrum[i].onTime = "Da";
 
-    if(h >= 0 && h < 24) {
-      // Ovo su pravilno uneseni sati.
+    if(h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
+
       uslov_h = true;
     }
 
-    if(m >= 0 && m < 60) {
-      // Ovo su pravilno unesene minute.
+    if(m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
       uslov_m = true;
     }
 
@@ -178,7 +150,6 @@ export class ListComponent implements OnInit {
     }
     else {
       this.addedFail = true;
-      //alert("Unesite vrijeme u formatu: H:MM.\nNpr. 9:15 za 9 sati i 15 minuta.");
     }
   }
 
@@ -188,12 +159,10 @@ export class ListComponent implements OnInit {
 
   DeleteScrum(i) {
     this.dailyscrum.splice(i, 1);
-    //console.log(i, name);
     this.rowNumber -= 1;
   }
 
   CancelScrum(i) {
     this.dailyscrum[i].editing = false;
   }
-
 }

@@ -11,15 +11,13 @@
   </div>
 </nav>
 
-<div class="maincontent"
-  *ngIf="page == 'list'">
+<div class="maincontent" *ngIf="page == 'list'">
   <div class="input-group input-group-sm mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text" id="inputGroup-sizing-sm">Pretraga <i class="fas fa-search"></i></span>
     </div>
     <input type="text" [(ngModel)]='searchText' class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
   </div>
-
   <button type="button" class="btn btn-secondary btn-sm" (click)="AddWorker();"
       style="
       float: right;
@@ -29,46 +27,37 @@
     <i class="fas fa-plus"></i> Dodaj
   </button>
   <div class="pre-scrollable">
-    <div class="container"
-        *ngFor="let worker of workers | search:['name', searchText]; let i = index;">
+    <div class="container" *ngFor="let worker of workers | search:['name', searchText]; let i = index;">
           <ul class="list-group">
             <li class="list-group-item">
-
-              <div class="workertab"
-                *ngIf="this.worker.editing == false">
-                  {{worker.name}}
-                  <div class="buttons">
-                    <button type="button" name="button" (click)="this.worker.editing = true; str = this.worker.name; ResetOthers(i);" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Izmijeni</button>
-                    <button type="button" name="button" (click)="RemoveWorker(i, this.worker.name);" class="btn btn-danger btn-sm" style="margin-left: 10px;"><i class="fas fa-trash-alt"></i> Obriši</button>
-                  </div>
+              <div class="workertab" *ngIf="this.worker.editing == false">
+                {{worker.name}}
+                <div class="buttons">
+                  <button type="button" name="button" (click)="this.worker.editing = true; str = this.worker.name; ResetOthers(i);" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Izmijeni</button>
+                  <button type="button" name="button" (click)="RemoveWorker(i, this.worker.name);" class="btn btn-danger btn-sm" style="margin-left: 10px;"><i class="fas fa-trash-alt"></i> Obriši</button>
+                </div>
               </div>
-              <div class="workertab"
-                *ngIf="this.worker.editing == true">
+              <div class="workertab" *ngIf="this.worker.editing == true">
                 <input id="str" [(ngModel)]="str" type="text" ng-model="inputText">
-                  <div class="buttons">
-                    <button type="button" name="button" (click)="SaveWorker(this.worker.id, i);" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Snimi</button>
-                    <button type="button" name="button" (click)="this.worker.editing = false;" class="btn btn-secondary btn-sm" style="margin-left: 10px;"><i class="fas fa-undo"></i> Odbaci</button>
-                  </div>
+                <div class="buttons">
+                  <button type="button" name="button" (click)="SaveWorker(this.worker.id, i);" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Snimi</button>
+                  <button type="button" name="button" (click)="this.worker.editing = false;" class="btn btn-secondary btn-sm" style="margin-left: 10px;"><i class="fas fa-undo"></i> Odbaci</button>
+                </div>
               </div>
             </li>
           </ul>
     </div>
   </div>
-  <div class="infoHired">
-    Ukupno zaposlenih: {{maxWorkers}}.
-  </div>
+  <div class="infoHired">Ukupno zaposlenih: {{maxWorkers}}.</div>
 </div>
 
-
-<div class="maincontent"
-  *ngIf = "page == 'daily'">
+<div class="maincontent" *ngIf = "page == 'daily'">
   <div class="input-group input-group-sm mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text" id="inputGroup-sizing-sm">Pretraga <i class="fas fa-search"></i></span>
     </div>
     <input type="text" [(ngModel)]='searchText' class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
   </div>
-
   <button type="button" class="btn btn-secondary btn-sm" (click)="adding = true; addedSuccess = false; addedFail = false;"
       style="
       float: right;
@@ -78,8 +67,7 @@
     <i class="fas fa-plus"></i> Dodaj
   </button>
 
-  <div class="addedAlert"
-    *ngIf="addedSuccess == true">
+  <div class="addedAlert" *ngIf="addedSuccess == true">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>Uspješno ste dodali novi upis!</strong> Ukoliko ste pogriješili sa unosom svaki red možete editovati klikom na ikonicu
         <i class="fas fa-user-edit"></i>.
@@ -88,8 +76,7 @@
       </button>
     </div>
   </div>
-  <div class="addedAlert"
-    *ngIf="addedFail == true">
+  <div class="addedAlert" *ngIf="addedFail == true">
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Nepravilan unos!</strong> U prazno polje unesite vrijeme dolaska u obliku: H:MM, npr. 9:15 za 9 sati i 15 minuta.
       <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="addedFail = false;">
@@ -97,27 +84,18 @@
       </button>
     </div>
   </div>
-
-  <div class="addingDaily"
-    *ngIf="adding == true">
-
+  <div class="addingDaily" *ngIf="adding == true">
     <form (ngSubmit)="onSubmit()" #dailyForm="ngForm">
       <div class="form-group">
         <label for="exampleFormControlSelect1">Odaberi radnika:</label>
-        <select class="form-control" id="exampleFormControlSelect1"
-          required
-          [(ngModel)]="model.name" name="name">
-          <option
-            *ngFor="let worker of workers; let i = index;">{{worker.name}}</option>
+        <select class="form-control" id="exampleFormControlSelect1" required [(ngModel)]="model.name" name="name">
+          <option *ngFor="let worker of workers; let i = index;">{{worker.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="exampleInputEmail1">Vrijeme dolaska:</label>
-        <input type="email" class="form-control" id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Unesite vrijeme dolaska"
-            required
-            [(ngModel)]="model.time" name="time">
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesite vrijeme dolaska"
+            required [(ngModel)]="model.time" name="time">
         <small id="emailHelp" class="form-text text-muted">U prazno polje unesite vrijeme dolaska u obliku: H:MM, npr. 9:15 za 9 sati i 15 minuta.</small>
       </div>
       <button type="submit" class="btn btn-primary btn-sm">Završi upis</button>
@@ -134,44 +112,36 @@
           <th scope="col">Stigao na vrijeme</th>
         </tr>
       </thead>
-      <tbody
-        *ngFor="let scrum of dailyscrum | search:['name', searchText]; let i = index;">
-        <tr
-          *ngIf="this.scrum.editing == false">
-            <th scope="row">
-              <i class="fas fa-user-edit" (click)="EditScrum(i);"></i>
-              <i class="fas fa-user-times" (click)="DeleteScrum(i);" style="margin-left: 2px;"></i>
-            </th>
-            <td>{{scrum.name}}</td>
-            <td>{{scrum.time}}</td>
-            <td>{{scrum.onTime}}</td>
+      <tbody *ngFor="let scrum of dailyscrum | search:['name', searchText]; let i = index;">
+        <tr *ngIf="this.scrum.editing == false">
+          <th scope="row">
+            <i class="fas fa-user-edit" (click)="EditScrum(i);"></i>
+            <i class="fas fa-user-times" (click)="DeleteScrum(i);" style="margin-left: 2px;"></i>
+          </th>
+          <td>{{scrum.name}}</td>
+          <td>{{scrum.time}}</td>
+          <td>{{scrum.onTime}}</td>
         </tr>
-
-        <tr
-          *ngIf="this.scrum.editing == true;">
-            <th scope="row">
-              <i class="fas fa-save" (click)="SaveScrum(i);"></i>
-              <i class="fas fa-undo" (click)="CancelScrum(i);" style="margin-left: 2px;"></i>
-            </th>
-            <td>
-                <select class="form-control" id="exampleFormControlSelect1"
-                    [(ngModel)]="nameToEdit">
-                    <option
-                      *ngFor="let worker of workers; let i = index;">{{worker.name}}</option>
-                </select>
-            </td>
-            <td>
-              <div class="input-group mb-3">
-                <input id="str" [(ngModel)]="timeToEdit" ng-model="inputText" placeholder='Prethodna vrijednost: {{scrum.time}}' type="text" class="form-control">
-              </div>
-            </td>
-            <td>{{scrum.onTime}}</td>
+        <tr *ngIf="this.scrum.editing == true;">
+          <th scope="row">
+            <i class="fas fa-save" (click)="SaveScrum(i);"></i>
+            <i class="fas fa-undo" (click)="CancelScrum(i);" style="margin-left: 2px;"></i>
+          </th>
+          <td>
+            <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="nameToEdit">
+              <option *ngFor="let worker of workers; let i = index;">{{worker.name}}</option>
+            </select>
+          </td>
+          <td>
+            <div class="input-group mb-3">
+              <input id="str" [(ngModel)]="timeToEdit" ng-model="inputText" placeholder='Prethodna vrijednost: {{scrum.time}}' type="text" class="form-control">
+            </div>
+          </td>
+          <td>{{scrum.onTime}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="infoHired">
-    Broj redova: {{rowNumber}}
-  </div>
+  <div class="infoHired">Broj redova: {{rowNumber}}</div>
 </div>
